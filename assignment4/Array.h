@@ -7,55 +7,57 @@
 #include <cstdlib>
 #include "defs.h"
 
-using namespace std;
-
+template <typename T>
 class Array
 {
-
 public:
-	// constructor
+	// Constructor
 	Array();
 
-	// destructor
+	// Destructor
 	~Array();
 
-	// other
-	Array &add(const string &);
-	Array &remove(const string &);
-	const string &get(int index) const;
+	// Other methods
+	Array &add(const T &);
+	Array &remove(const T &);
+	const T &get(int index) const;
 	int getSize() const;
 	bool isFull() const;
 
 private:
 	int numElements;
-	string *elements;
+	T *elements;
 };
 
-Array::Array()
+template <typename T>
+Array<T>::Array()
 {
-	elements = new string[MAX_ARR];
+	elements = new T[MAX_ARR];
 	numElements = 0;
 }
 
-Array::~Array()
+template <typename T>
+Array<T>::~Array()
 {
 	delete[] elements;
 }
 
-Array &Array::add(const string &s)
+template <typename T>
+Array<T> &Array<T>::add(const T &item)
 {
 	if (numElements >= MAX_ARR)
 		return *this;
-	elements[numElements++] = s;
+	elements[numElements++] = item;
 	return *this;
 }
 
-Array &Array::remove(const string &s)
+template <typename T>
+Array<T> &Array<T>::remove(const T &item)
 {
 	int index = 0;
 	while (index < numElements)
 	{
-		if (s == elements[index])
+		if (item == elements[index])
 		{
 			--numElements;
 			break;
@@ -71,24 +73,27 @@ Array &Array::remove(const string &s)
 	return *this;
 }
 
-int Array::getSize() const
+template <typename T>
+int Array<T>::getSize() const
 {
 	return numElements;
 }
 
-bool Array::isFull() const
+template <typename T>
+bool Array<T>::isFull() const
 {
 	return numElements >= MAX_ARR;
 }
 
-const string &Array::get(int index) const
+template <typename T>
+const T &Array<T>::get(int index) const
 {
 	if (index < 0 || index >= numElements)
 	{
-		cerr << "Array index out of bounds" << endl;
+		std::cerr << "Array index out of bounds" << std::endl;
 		exit(1);
 	}
 	return elements[index];
 }
 
-#endif
+#endif // ARRAY_H

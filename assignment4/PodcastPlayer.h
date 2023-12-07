@@ -10,6 +10,7 @@ public:
     HorC_Search(const std::string &host, const std::string &category);
     bool matches(const Episode *episode) const override;
     void print(std::ostream &os) const override;
+    void play(const Episode &episode, std::ostream &os);
 };
 
 #endif // HORC_SEARCH_H
